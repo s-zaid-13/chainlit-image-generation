@@ -1,27 +1,28 @@
-# Chainlit + Gemini Image Generator 🎨
+# Chainlit + Gemini Image Generator 
 
-> A conversational AI app that turns your words into images — built with Chainlit's decorator-driven architecture, Gemini for prompt enhancement, and Pollinations.ai for free image rendering.
+A conversational AI app that turns text prompts into images. Built with Chainlit's decorator-driven architecture, Gemini for prompt enhancement, and Pollinations.ai for free image rendering.
 
 [![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
 [![Chainlit](https://img.shields.io/badge/UI-Chainlit-orange.svg)](https://docs.chainlit.io/)
 [![Gemini](https://img.shields.io/badge/AI-Gemini%20API-4285F4.svg)](https://ai.google.dev/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ---
 
-## ✨ What This Does
+## What This Does
 
-Type a description, watch it come to life. Gemini's free `gemini-3.1-flash-lite` text model rewrites your prompt into something richer and more vivid, styled to whichever aesthetic you pick — then **Pollinations.ai** (free, no API key required) renders the actual image. The whole pipeline is shown live in the chat as collapsible reasoning steps, with buttons to regenerate or cycle through styles without retyping anything.
+You type a description, and the app turns it into an image. Gemini's free `gemini-3.1-flash-lite` text model rewrites your prompt into something more detailed and vivid, styled to whichever aesthetic you pick. Pollinations.ai then renders the actual image, no API key required on that end.
+
+The whole process shows up live in the chat as collapsible steps, so you can see what's happening at each stage. Every result comes with a Regenerate button and a Try Another Style button.
 
 You: a fox reading a book in a cozy old library
-Bot: ⚙️ Writing a cinematic prompt...
-Bot: ⚙️ Rendering...
+Bot: Writing a cinematic prompt...
+Bot: Rendering...
 Bot: [image] — a fox reading a book in a cozy old library — Cinematic style
 
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # 1. Clone the repo
@@ -41,32 +42,31 @@ cp .env.example .env
 chainlit run app.py -w
 ```
 
-Open **http://localhost:8000** — you'll land on a welcome screen with clickable starter prompts (Fox in a library, Floating city, Neon street, Cozy cabin), or just type your own idea.
+Open **http://localhost:8000**. You'll land on a welcome screen with a few starter prompts (Fox in a library, Floating city, Neon street, Cozy cabin), or you can just type your own idea.
 
 ---
 
-## 🧠 How It Works
+## How It Works
 
 | Stage | What happens |
 |---|---|
-| **1. You type a prompt** | Caught by `@cl.on_message` |
-| **2. Gemini enhances it** | `gemini-3.1-flash-lite` rewrites your prompt into a vivid, detailed version, leaning into your selected style |
-| **3. Pollinations renders it** | The enhanced prompt is sent to `image.pollinations.ai` — no API key needed, fully free |
-| **4. Result appears inline** | Shown with a **🔄 Regenerate** button and a **🎨 Try another style** button |
+| 1. You type a prompt | Caught by `@cl.on_message` |
+| 2. Gemini enhances it | `gemini-3.1-flash-lite` rewrites your prompt into a more detailed version, matching your selected style |
+| 3. Pollinations renders it | The enhanced prompt is sent to `image.pollinations.ai`, no API key needed |
+| 4. Result appears inline | Shown with a **Regenerate** button and a **Try Another Style** button |
 
-Every step is visible in the chat as a live, collapsible trace (`cl.Step`) — you can literally watch the app think before the image appears.
+Each step is visible in the chat as a live, collapsible trace (`cl.Step`), so you can follow along before the image shows up.
 
-🎨 Art styles available: Cinematic · Anime · Watercolor · Cyberpunk · Photorealistic
+**Available styles:** Cinematic, Anime, Watercolor, Cyberpunk, Photorealistic
 
-
-Change styles anytime from the ⚙️ settings panel, or hit **🎨 Try another style** on any result to cycle through the list and re-render the same prompt instantly.
+You can change styles anytime from the settings panel, or click **Try Another Style** on any result to cycle through the list and re-render the same prompt right away.
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
-chainlit-gemini-imagegen/
-├── app.py # All the logic — decorators, prompt enhancement, rendering
+chainlit-image-generation/
+├── app.py # Core logic — decorators, prompt enhancement, rendering
 ├── chainlit.md # Welcome text shown in the Chainlit UI
 ├── requirements.txt # Dependencies
 ├── .env.example # Template for your API key
@@ -75,12 +75,11 @@ chainlit-gemini-imagegen/
 
 ---
 
-## 🎓 Why Chainlit?
+## Why Chainlit?
 
-This project doubled as a hands-on exploration of **Python decorators** — `@cl.on_chat_start`, `@cl.on_message`, `@cl.on_settings_update`, and `@cl.action_callback` let Chainlit manage *when* code runs, instead of hand-rolling a rerun loop the way Streamlit requires. Chat history, streaming, style settings, and reasoning traces came essentially for free, leaving the actual generation logic as the only real work.
+This project was also a way to get hands-on with Python decorators. Hooks like `@cl.on_chat_start`, `@cl.on_message`, `@cl.on_settings_update`, and `@cl.action_callback` let Chainlit decide when each function runs, instead of writing a rerun loop the way Streamlit requires. Chat history, streaming, settings, and reasoning traces all worked without extra setup, so most of the actual work went into the generation logic itself.
 
-**Streamlit vs Chainlit, in one line:**
-> Streamlit is a canvas for any Python app. Chainlit is a stage built specifically for conversation.
+**In short:** Streamlit is a canvas for any kind of Python app. Chainlit is built specifically for conversation.
 
 | | Streamlit | Chainlit |
 |---|---|---|
@@ -91,5 +90,4 @@ This project doubled as a hands-on exploration of **Python decorators** — `@cl
 
 ---
 
-
-**Built as part of a hands-on exploration of Chainlit and Python decorators.** 
+**Built as part of a hands-on exploration of Chainlit and Python decorators.**
