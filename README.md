@@ -1,8 +1,10 @@
-# Chainlit + Gemini Image Generator 
+# 🎨 Chainlit + Gemini Image Generator
 
-A conversational AI app that turns text prompts into images. Built with Chainlit's decorator-driven architecture, Gemini for prompt enhancement, and Pollinations.ai for free image rendering.
+A conversational AI application that transforms text prompts into images using **Chainlit**, **Google Gemini**, and **Pollinations.ai**.
 
-[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
+Built to explore Chainlit's decorator-driven architecture while creating a simple, interactive image generation experience.
+
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
 [![Chainlit](https://img.shields.io/badge/UI-Chainlit-orange.svg)](https://docs.chainlit.io/)
 [![Gemini](https://img.shields.io/badge/AI-Gemini%20API-4285F4.svg)](https://ai.google.dev/)
 
@@ -10,83 +12,147 @@ A conversational AI app that turns text prompts into images. Built with Chainlit
 
 ## What This Does
 
-You type a description, and the app turns it into an image. Gemini's free `gemini-3.1-flash-lite` text model rewrites your prompt into something more detailed and vivid, styled to whichever aesthetic you pick. Pollinations.ai then renders the actual image, no API key required on that end.
+Describe an image in natural language, and the application generates it for you.
 
-The whole process shows up live in the chat as collapsible steps, so you can see what's happening at each stage. Every result comes with a Regenerate button and a Try Another Style button.
+Your prompt is first enhanced using Gemini's free `gemini-3.1-flash-lite` model, making it more detailed and visually descriptive while matching your selected artistic style. The enhanced prompt is then sent to Pollinations.ai, which renders the final image without requiring an API key.
 
-You: a fox reading a book in a cozy old library
-Bot: Writing a cinematic prompt...
-Bot: Rendering...
-Bot: [image] — a fox reading a book in a cozy old library — Cinematic style
+The entire process is shown live in the chat using collapsible reasoning steps, so you can follow each stage before the image appears.
 
+Every generated image also includes:
+
+- **Regenerate** – create another version using the same prompt and style.
+- **Try Another Style** – render the same prompt using the next available style.
+
+### Example
+
+```text
+You:
+A fox reading a book in a cozy old library
+
+Assistant:
+Writing a cinematic prompt...
+
+Rendering image...
+
+[Generated Image]
+Style: Cinematic
+```
 
 ---
 
 ## Quick Start
 
+### 1. Clone the Repository
+
 ```bash
-# 1. Clone the repo
 git clone https://github.com/s-zaid-13/chainlit-image-generation.git
 cd chainlit-image-generation
+```
 
-# 2. Set up your environment
+### 2. Create a Virtual Environment
+
+```bash
 python -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
+```
+
+**Linux / macOS**
+
+```bash
+source venv/bin/activate
+```
+
+**Windows**
+
+```bash
+venv\Scripts\activate
+```
+
+### 3. Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-# 3. Add your free Gemini API key
+### 4. Configure Environment Variables
+
+```bash
 cp .env.example .env
-# → paste your key from https://aistudio.google.com/apikey
+```
 
-# 4. Launch
+Paste your free Gemini API key into `.env`.
+
+Get your API key from:
+
+https://aistudio.google.com/apikey
+
+### 5. Run the Application
+
+```bash
 chainlit run app.py -w
 ```
 
-Open **http://localhost:8000**. You'll land on a welcome screen with a few starter prompts (Fox in a library, Floating city, Neon street, Cozy cabin), or you can just type your own idea.
+Open:
+
+```
+http://localhost:8000
+```
+
+You'll be greeted with a welcome screen containing a few starter prompts (Fox in a library, Floating city, Neon street, Cozy cabin), or you can simply enter your own prompt.
 
 ---
 
 ## How It Works
 
-| Stage | What happens |
-|---|---|
-| 1. You type a prompt | Caught by `@cl.on_message` |
-| 2. Gemini enhances it | `gemini-3.1-flash-lite` rewrites your prompt into a more detailed version, matching your selected style |
-| 3. Pollinations renders it | The enhanced prompt is sent to `image.pollinations.ai`, no API key needed |
-| 4. Result appears inline | Shown with a **Regenerate** button and a **Try Another Style** button |
+| Stage | Description |
+|------|-------------|
+| **1. User Prompt** | Your prompt is received by `@cl.on_message`. |
+| **2. Prompt Enhancement** | Gemini (`gemini-3.1-flash-lite`) rewrites it into a richer, more descriptive prompt based on the selected style. |
+| **3. Image Generation** | The enhanced prompt is sent to `image.pollinations.ai` for rendering. |
+| **4. Result** | The generated image is displayed with **Regenerate** and **Try Another Style** actions. |
 
-Each step is visible in the chat as a live, collapsible trace (`cl.Step`), so you can follow along before the image shows up.
+Each stage is displayed as a live, collapsible reasoning trace using `cl.Step`, making the generation process transparent.
 
-**Available styles:** Cinematic, Anime, Watercolor, Cyberpunk, Photorealistic
+**Available styles**
 
-You can change styles anytime from the settings panel, or click **Try Another Style** on any result to cycle through the list and re-render the same prompt right away.
+- Cinematic
+- Anime
+- Watercolor
+- Cyberpunk
+- Photorealistic
+
+Styles can be changed at any time from the settings panel, or by clicking **Try Another Style** on a generated image.
 
 ---
 
 ## Project Structure
 
+```text
 chainlit-image-generation/
-├── app.py # Core logic — decorators, prompt enhancement, rendering
-├── chainlit.md # Welcome text shown in the Chainlit UI
-├── requirements.txt # Dependencies
-├── .env.example # Template for your API key
-└── generated_images/ # Output folder (gitignored)
-
+├── app.py                 # Core application logic
+├── chainlit.md            # Welcome screen shown in Chainlit
+├── requirements.txt       # Project dependencies
+├── .env.example           # Environment variable template
+└── generated_images/      # Generated images (gitignored)
+```
 
 ---
 
 ## Why Chainlit?
 
-This project was also a way to get hands-on with Python decorators. Hooks like `@cl.on_chat_start`, `@cl.on_message`, `@cl.on_settings_update`, and `@cl.action_callback` let Chainlit decide when each function runs, instead of writing a rerun loop the way Streamlit requires. Chat history, streaming, settings, and reasoning traces all worked without extra setup, so most of the actual work went into the generation logic itself.
+This project was also an opportunity to explore **Python decorators** through Chainlit's event-driven architecture.
 
-**In short:** Streamlit is a canvas for any kind of Python app. Chainlit is built specifically for conversation.
+Decorators such as `@cl.on_chat_start`, `@cl.on_message`, `@cl.on_settings_update`, and `@cl.action_callback` allow Chainlit to automatically trigger different parts of the application in response to user interactions. Unlike Streamlit, there is no need to manage reruns or manually maintain chat state.
+
+As a result, chat history, streaming responses, settings, and reasoning traces work out of the box, allowing the application logic to stay focused on prompt enhancement and image generation.
+
+**In short:** Streamlit is a general-purpose framework for Python applications, while Chainlit is designed specifically for conversational AI experiences.
 
 | | Streamlit | Chainlit |
 |---|---|---|
-| Best for | Dashboards, data apps | Chatbots, agents |
+| Best for | Dashboards, data apps | Chatbots, AI agents |
 | Chat history | Manual | Built-in |
 | Reasoning traces | Manual | Built-in (`cl.Step`) |
-| Layout freedom | High | Chat-shaped |
+| Layout | Highly customizable | Chat-focused |
 
 ---
 
